@@ -27,6 +27,8 @@
         </h3>
 
         <p class="list-group-item-text">{{ book.author }}</p>
+        <br/>
+        <img style="max-width:100px;" *ngIf="book.photo" [src]="book.photo">
 
       </button>
 

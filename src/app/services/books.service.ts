@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {Book} from '../models/book.model';
 import {Subject} from 'rxjs';
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 import DataSnapshot = firebase.database.DataSnapshot;
+
 
 @Injectable({
   providedIn: 'root'
@@ -72,6 +73,25 @@ export class BooksService {
 
 
   removeBook(book: Book) {
+    if (book.photo) {
+
+      const storageRef = firebase.storage().refFromURL(book.photo);
+
+      storageRef.delete().then(
+        () => {
+
+          console.log('Photo supprimé!');
+
+        },
+
+        (error) => {
+
+          console.log('Photo introuvable! : ' + error);
+
+        }
+      );
+
+    }
 
     const bookIndexToRemove = this.books.findIndex(
       (bookEl) => {
@@ -91,4 +111,42 @@ export class BooksService {
 
   }
 
+  uploadFile(file: File) {
+
+    return new Promise(
+      (resolve, reject) => {
+
+        const almostUniqueFileName = Date.now().toString();
+
+        const upload = firebase.storage().ref()
+
+          .child('images/' + almostUniqueFileName + file.name).put(file);
+
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+
+          () => {
+
+            console.log('Chargement…');
+
+          },
+
+          (error) => {
+
+            console.log('Erreur de chargement ! : ' + error);
+
+            reject();
+
+          },
+
+          () => {
+
+            resolve(upload.snapshot.ref.getDownloadURL());
+
+          }
+        );
+
+      }
+    );
+
+  }
 }
