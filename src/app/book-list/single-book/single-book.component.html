@@ -1,18 +1,36 @@
-<div class="row">
+<div *ngIf="book" class="row">
 
-  <div class="col-xs-12">
+  <div class="col s12 m8 offset-m2">
 
-    <img style="max-width:1200px;" *ngIf="book.photo" [src]="book.photo"/>
+    <h2 class="header center">{{ book.title }}</h2>
 
-    <h1>{{ book.title }}</h1>
+    <div class="card horizontal hoverable">
 
-    <h3>{{ book.author }}</h3>
-    <img style="max-width: 400px" *ngIf="book.photo" [src]="book.photo">
-    <p>{{ book.synopsis }}</p>
+      <div class="card-img">
 
+        <img style="max-width: 400px" *ngIf="book.photo" [src]="book.photo">
 
-    <button class="btn btn-default" (click)="onBack()">Retour</button>
+      </div>
 
+      <div class="align-content-center">
+        <div class="flex-wrap">
+          <table class="bordered striped">
+            <tbody>
+            <tr>
+              <td>
+                <h3>{{ book.author }}</h3>
+              </td>
+            </tr>
+            <tr>
+              <p>{{ book.synopsis }}</p>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <button class="btn btn-default" (click)="onBack()">Retour</button>
+    </div>
   </div>
 
 </div>

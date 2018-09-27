@@ -2,39 +2,42 @@
 
   <div class="col-xs-12">
 
-    <h2>Vos livres</h2>
+    <h2>Vos Pêches</h2>
 
-    <div class="list-group">
+    <div *ngFor="let book of books" class="col s6 m4">
 
-      <button
+      <div class="img-thumbnail" *ngFor="let book of books; let i = index" (click)="onViewBook(i)">
+        <button
 
-        class="list-group-item"
+          class="flex-wrap">
 
-        *ngFor="let book of books; let i = index"
+          <h3 class="list-group-item-heading">
 
-        (click)="onViewBook(i)">
+            {{ book.title }}
 
-        <h3 class="list-group-item-heading">
+            <button class="btn btn-default pull-right" (click)="onDeleteBook(book)">
 
-        {{ book.title }}
+              <span class="glyphicon glyphicon-minus"></span>
 
-          <button class="btn btn-default pull-right" (click)="onDeleteBook(book)">
+            </button>
 
-            <span class="glyphicon glyphicon-minus"></span>
+          </h3>
 
-          </button>
+          <div  style="width:150px; height: 150px;"  class="card-img">
+            <img style="width:150px; height: 150px;" *ngIf="book.photo" [src]="book.photo">
+          </div>
 
-        </h3>
+          <p class="list-group-item-text">{{ book.author }}</p>
 
-        <p class="list-group-item-text">{{ book.author }}</p>
-        <br/>
-        <img style="max-width:100px;" *ngIf="book.photo" [src]="book.photo">
-
-      </button>
-
+        </button>
+      </div>
     </div>
 
-    <button class="btn btn-primary" (click)="onNewBook()">Nouveau livre</button>
+    <a title="Ajoute une pêche !!" class="btn btn-primary btn-floating btn-large waves-effect waves-light red z-depth-3"
+       style="position: fixed; bottom: 25px; right: 25px;"
+       (click)="onNewBook()">
+      <strong>+</strong>
+    </a>
 
   </div>
 
